@@ -24,9 +24,9 @@
 
 Для изменения используемого хранилища необходимо изменить файл config/config.toml:
 ```
-`database = "postgres"` - для использования Postgres
+database = "postgres" - для использования Postgres
 
-`database = "in_memory"` - для использования in memory
+database = "in_memory" - для использования in memory
 ```
 
 **Отправление запросов**
