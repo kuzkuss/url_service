@@ -1,0 +1,115 @@
+definitions:
+  echo.HTTPError:
+    properties:
+      message: {}
+    type: object
+  models.Link:
+    properties:
+      original_link:
+        type: string
+      short_link:
+        readOnly: true
+        type: string
+    required:
+    - original_link
+    type: object
+  models.LinkOrigin:
+    properties:
+      original_link:
+        type: string
+    required:
+    - original_link
+    type: object
+  models.LinkShort:
+    properties:
+      short_link:
+        type: string
+    required:
+    - short_link
+    type: object
+  pkg.Response:
+    properties:
+      body: {}
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  title: WS Swagger API
+  version: "1.0"
+paths:
+  /create:
+    post:
+      consumes:
+      - application/json
+      description: create short link
+      parameters:
+      - description: link data
+        in: body
+        name: original_link
+        required: true
+        schema:
+          $ref: '#/definitions/models.Link'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: short link created
+          schema:
+            allOf:
+            - $ref: '#/definitions/pkg.Response'
+            - properties:
+                body:
+                  $ref: '#/definitions/models.LinkShort'
+              type: object
+        "400":
+          description: bad request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "405":
+          description: Method Not Allowed
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: internal server error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: CreateShortLink
+      tags:
+      - link
+  /get/{short_link}:
+    get:
+      description: get original link by short link
+      parameters:
+      - description: Short link
+        in: path
+        name: short_link
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success get link
+          schema:
+            allOf:
+            - $ref: '#/definitions/pkg.Response'
+            - properties:
+                body:
+                  $ref: '#/definitions/models.LinkOrigin'
+              type: object
+        "404":
+          description: not found
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "405":
+          description: method not allowed
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: internal server error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: GetOriginalLink
+      tags:
+      - link
+swagger: "2.0"

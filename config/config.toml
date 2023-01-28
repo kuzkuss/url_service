@@ -1,0 +1,9 @@
+database = "postgres"
+
+http_host = "0.0.0.0"
+http_port = "8080"
+
+grpc_host = "0.0.0.0"
+grpc_port = "8081"
+
+postgres_connection_string = "host=url_pg port=5432 user=kuzkus password=postgres_url database=postgres"

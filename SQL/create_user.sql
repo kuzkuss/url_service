@@ -1,0 +1,3 @@
+CREATE USER kuzkus WITH PASSWORD 'postgres_url';
+
+GRANT SELECT, INSERT ON ALL TABLES IN SCHEMA public TO kuzkus;
